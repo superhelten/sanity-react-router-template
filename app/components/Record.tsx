@@ -1,4 +1,4 @@
-import {createDataAttribute} from '@sanity/visual-editing/remix'
+import {createDataAttribute} from '@sanity/visual-editing/react-router'
 
 import {LikeDislike} from '~/components/LikeDislike'
 import {RecordCover} from '~/components/RecordCover'

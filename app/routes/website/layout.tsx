@@ -1,7 +1,6 @@
 import {useQuery} from '@sanity/react-loader'
 import {VisualEditing} from '@sanity/visual-editing/react-router'
 import {lazy, Suspense} from 'react'
-import type {LoaderFunctionArgs} from 'react-router'
 import {Outlet, useLocation, useOutletContext} from 'react-router'
 
 import {Footer} from '~/components/Footer'
