@@ -1,18 +1,21 @@
-import type {LinksFunction, LoaderFunctionArgs} from '@remix-run/node'
-import {json} from '@remix-run/node'
+import type {LinksFunction, LoaderFunctionArgs} from 'react-router'
 import {
+  data,
+  isRouteErrorResponse,
   Links,
   Meta,
   Outlet,
   Scripts,
   ScrollRestoration,
-  useLoaderData,
-} from '@remix-run/react'
+} from 'react-router'
 
 import {themePreferenceCookie} from '~/cookies'
 import {getBodyClassNames} from '~/lib/getBodyClassNames'
 import styles from '~/tailwind.css?url'
 import {themePreference} from '~/types/themePreference'
+
+import type {Route} from './+types/root'
+import {useRootLoaderData} from './lib/useRootLoaderData'
 
 export const links: LinksFunction = () => {
   return [
@@ -42,7 +45,7 @@ export const loader = async ({request}: LoaderFunctionArgs) => {
   const theme = themePreference.parse(cookieValue.themePreference) || 'light'
   const bodyClassNames = getBodyClassNames(theme)
 
-  return json({
+  return data({
     theme,
     bodyClassNames,
     ENV: {
@@ -53,28 +56,63 @@ export const loader = async ({request}: LoaderFunctionArgs) => {
   })
 }
 
-export default function App() {
-  const {theme, bodyClassNames, ENV} = useLoaderData<typeof loader>()
+export function Layout({children}: {children: React.ReactNode}) {
+  const {bodyClassNames, ENV} = useRootLoaderData()
 
   return (
     <html lang="en">
       <head>
-        <Meta />
         <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="https://fav.farm/🤘" />
+        <Meta />
         <Links />
       </head>
       <body className={bodyClassNames}>
-        <Outlet context={{theme}} />
+        {children}
         <ScrollRestoration />
+        <Scripts />
         <script
           dangerouslySetInnerHTML={{
             __html: `window.ENV = ${JSON.stringify(ENV)}`,
           }}
         />
-        <Scripts />
       </body>
     </html>
+  )
+}
+
+export default function App() {
+  const {theme} = useRootLoaderData()
+
+  return <Outlet context={{theme}} />
+}
+
+export function ErrorBoundary({error}: Route.ErrorBoundaryProps) {
+  let message = 'Oops!'
+  let details = 'An unexpected error occurred.'
+  let stack: string | undefined
+
+  if (isRouteErrorResponse(error)) {
+    message = error.status === 404 ? '404' : 'Error'
+    details =
+      error.status === 404
+        ? 'The requested page could not be found.'
+        : error.statusText || details
+  } else if (import.meta.env.DEV && error && error instanceof Error) {
+    details = error.message
+    stack = error.stack
+  }
+
+  return (
+    <main className="pt-16 p-4 container mx-auto">
+      <h1>{message}</h1>
+      <p>{details}</p>
+      {stack && (
+        <pre className="w-full p-4 overflow-x-auto">
+          <code>{stack}</code>
+        </pre>
+      )}
+    </main>
   )
 }

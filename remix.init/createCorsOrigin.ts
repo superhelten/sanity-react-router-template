@@ -3,7 +3,7 @@ import {getCliClient} from 'sanity/cli'
 const client = getCliClient()
 const {projectId} = client.config()
 const pathname = `projects/${projectId}/cors`
-const corsOrigin = 'http://localhost:3000'
+const corsOrigin = 'http://localhost:5173'
 
 type CorsResponse = {
   id: number

@@ -1,4 +1,4 @@
-import {useFetcher, useLocation} from '@remix-run/react'
+import { useFetcher, useLocation } from 'react-router';
 import {ThumbsDown, ThumbsUp} from 'lucide-react'
 
 type LikeDislikeProps = {

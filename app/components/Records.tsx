@@ -1,4 +1,4 @@
-import {Link} from '@remix-run/react'
+import { Link } from 'react-router';
 import type {EncodeDataAttributeCallback} from '@sanity/react-loader'
 
 import {RecordCover} from '~/components/RecordCover'

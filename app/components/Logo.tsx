@@ -1,4 +1,4 @@
-import {Link} from '@remix-run/react'
+import {Link} from 'react-router'
 
 import type {LogoProps} from '~/types/home'
 
@@ -13,7 +13,7 @@ export function Logo(props: LogoProps) {
 
   return (
     <p className="text-lg font-bold tracking-tighter text-black dark:text-white lg:text-2xl">
-      <Link to="/">{siteTitle ?? `Sanity Remix`}</Link>
+      <Link to="/">{siteTitle ?? `Sanity React Router`}</Link>
     </p>
   )
 }

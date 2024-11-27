@@ -1,13 +1,14 @@
-import type {LoaderFunctionArgs} from '@remix-run/node'
 import groq from 'groq'
 
 import {generatePngFromDocument} from '~/lib/og.server'
 import {viewClient} from '~/sanity/client.server'
 
+import type {Route} from './+types/og'
+
 export const OG_IMAGE_WIDTH = 1200
 export const OG_IMAGE_HEIGHT = 630
 
-export const loader = async ({request}: LoaderFunctionArgs) => {
+export const loader = async ({request}: Route.LoaderArgs) => {
   const {origin, searchParams} = new URL(request.url)
   const id = searchParams.get('id')
 

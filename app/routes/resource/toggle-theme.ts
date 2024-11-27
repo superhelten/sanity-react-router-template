@@ -1,14 +1,16 @@
-import type {ActionFunction, LoaderFunction} from '@remix-run/node'
-import {json, redirect} from '@remix-run/node'
+import type {LoaderFunction} from 'react-router'
+import {data, redirect} from 'react-router'
 
 import {themePreferenceCookie} from '~/cookies'
 
-export const action: ActionFunction = async ({request}) => {
+import type {Route} from './+types/toggle-theme'
+
+export const action = async ({request}: Route.ActionArgs) => {
   const cookieHeader = request.headers.get('Cookie')
   const cookie = (await themePreferenceCookie.parse(cookieHeader)) || {}
   const themePreference = cookie.themePreference === `dark` ? `light` : `dark`
 
-  return json(
+  return data(
     {themePreference},
     {
       headers: {

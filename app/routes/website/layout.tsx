@@ -1,14 +1,8 @@
-import type {LoaderFunctionArgs} from '@remix-run/node'
-import {
-  json,
-  Outlet,
-  useLoaderData,
-  useLocation,
-  useOutletContext,
-} from '@remix-run/react'
 import {useQuery} from '@sanity/react-loader'
-import {VisualEditing} from '@sanity/visual-editing/remix'
+import {VisualEditing} from '@sanity/visual-editing/react-router'
 import {lazy, Suspense} from 'react'
+import type {LoaderFunctionArgs} from 'react-router'
+import {Outlet, useLocation, useOutletContext} from 'react-router'
 
 import {Footer} from '~/components/Footer'
 import {Header} from '~/components/Header'
@@ -19,6 +13,8 @@ import {HOME_QUERY} from '~/sanity/queries'
 import type {HomeDocument} from '~/types/home'
 import {homeZ} from '~/types/home'
 import type {ThemePreference} from '~/types/themePreference'
+
+import type {Route} from './+types/layout'
 
 const SanityLiveMode = lazy(() =>
   import('~/components/SanityLiveMode').then((module) => ({
@@ -31,7 +27,7 @@ const ExitPreview = lazy(() =>
   })),
 )
 
-export const loader = async ({request}: LoaderFunctionArgs) => {
+export const loader = async ({request}: Route.LoaderArgs) => {
   const {preview, options} = await loadQueryOptions(request.headers)
 
   // Content from Sanity used in the global layout
@@ -44,21 +40,17 @@ export const loader = async ({request}: LoaderFunctionArgs) => {
     }),
   )
 
-  return json({
+  return {
     initial,
     query,
     params,
     sanity: {preview},
-  })
+  }
 }
 
-export default function Website() {
-  const {initial, query, params, sanity} = useLoaderData<typeof loader>()
-  const {data: home} = useQuery<typeof initial.data>(query, params, {
-    // There's a TS issue with how initial comes over the wire
-    // @ts-expect-error
-    initial,
-  })
+export default function Website({loaderData}: Route.ComponentProps) {
+  const {initial, query, params, sanity} = loaderData
+  const {data: home} = useQuery<typeof initial.data>(query, params, {initial})
   const {pathname} = useLocation()
   const {theme} = useOutletContext<{theme: ThemePreference}>()
 

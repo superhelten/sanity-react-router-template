@@ -1,9 +1,10 @@
-import {useRouteLoaderData} from '@remix-run/react'
+import {useRouteLoaderData} from 'react-router'
 
-import type {Loader as RootLoader} from '~/root'
+import type {Route} from '../+types/root'
 
 export function useRootLoaderData() {
-  const data = useRouteLoaderData<RootLoader>(`root`)
+  const data: Route.ComponentProps['loaderData'] | undefined =
+    useRouteLoaderData(`root`)
 
   return data!
 }
