@@ -1,4 +1,5 @@
 import {Logo} from '~/components/Logo'
+import {STUDIO_BASEPATH} from '~/sanity/constants'
 import type {LogoProps} from '~/types/home'
 
 export function Footer(props: LogoProps) {
@@ -9,7 +10,7 @@ export function Footer(props: LogoProps) {
         <div className="flex max-w-sm text-right flex-1 flex-col items-end justify-end gap-2 text-sm lg:flex-row lg:items-center lg:gap-5">
           <a
             className="hover:text-cyan-600 dark:hover:text-cyan-200"
-            href="/studio"
+            href={STUDIO_BASEPATH}
           >
             Log in to embedded Sanity Studio
           </a>

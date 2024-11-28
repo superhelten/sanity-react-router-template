@@ -1,10 +1,11 @@
-import {createDataAttribute} from '@sanity/visual-editing/remix'
+import {createDataAttribute} from '@sanity/visual-editing/react-router'
 
 import {LikeDislike} from '~/components/LikeDislike'
 import {RecordCover} from '~/components/RecordCover'
 import {SanityContent} from '~/components/SanityContent'
 import {Title} from '~/components/Title'
 import {secondsToMinutes} from '~/lib/secondsToMinutes'
+import {STUDIO_BASEPATH} from '~/sanity/constants'
 import type {RecordDocument} from '~/types/record'
 
 type RecordProps = {
@@ -16,7 +17,7 @@ export function Record({data}: RecordProps) {
   const imageDataAttribute = createDataAttribute({
     id: _id,
     path: ['image'],
-    baseUrl: '/studio',
+    baseUrl: STUDIO_BASEPATH,
     type: 'record',
   }).toString()
 

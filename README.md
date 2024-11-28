@@ -1,23 +1,28 @@
-# Full-featured Sanity Studio + Remix Vite Template
+# Full-featured Sanity Studio + React Router Vite Template
 
-Batteries-included [Remix](https://remix.run/) website using Vite with [Vercel's deployment preset](https://vercel.com/docs/frameworks/remix) with [Visual Editing](https://www.sanity.io/docs/visual-editing) for interactive live-preview inside [Presentation](https://www.sanity.io/docs/presentation) powered by an embedded [Sanity Studio](https://www.sanity.io/studio).
+> [!WARNING]  
+> This template has been updated to React Router 7, but will not currently deploy to Vercel, as their build plugin has not yet been updated. Update it yourself to adapt to the server of your choice. It will be updated when Vercel updates the build plugin.
+
+--
+
+Batteries-included [React Router 7](https://reactrouter.com) website using Vite with [Vercel's deployment preset](https://vercel.com/docs/frameworks/remix) with [Visual Editing](https://www.sanity.io/docs/visual-editing) for interactive live-preview inside [Presentation](https://www.sanity.io/docs/presentation) powered by an embedded [Sanity Studio](https://www.sanity.io/studio).
 
 ![Presentation tool in Sanity Studio](./img/sanity-remix-presentation.png)
 
-[Sanity Docs](https://sanity.io/docs) | [Remix Docs](https://remix.run/docs)
+[Sanity Docs](https://sanity.io/docs) | [React Router Docs](https://reactrouter.com/home)
 
 ## Installation
 
-From the command line, install this project as a Remix template:
+From the command line, install this project as a React Router template:
 
 ```sh
-npx create-remix@latest --template SimeonGriggs/sanity-remix-template
+npx create-react-router@latest --template SimeonGriggs/sanity-react-router-template
 ```
 
 This template comes with an init script, if you choose not to run it, you can run it later with:
 
 ```sh
-npx remix init
+npx react-router init
 ```
 
 This script should populate your `.env` file with the details of a new or existing Sanity project's ID and dataset name, as well as create a session secret and an API Token with Viewer permissions. If the init script has already been deleted, you can easily reset your `.env` file by running the following command:
@@ -32,7 +37,7 @@ Then, start the development server:
 npm run dev
 ```
 
-Now open the Studio at [localhost:3000/studio](http://localhost:3000/studio) and start authoring content!
+Now open the Studio at [localhost:5173/studio](http://localhost:5173/studio) and start authoring content!
 
 ### Seed the Studio with fake content
 
@@ -51,7 +56,7 @@ Useful Sanity examples with a light sprinkling of opinionated patterns
 
 ### Embedded Studio
 
-Access to Sanity Studio v3 from within the Remix application itself. Now the whole Studio is a component, it lives at the `/studio` route.
+Access to Sanity Studio v3 from within the React Router application itself. Now the whole Studio is a component, it lives at the `/studio` route.
 
 ### Visual Editing for interactive live preview inside Presentation
 
@@ -87,7 +92,7 @@ Creating "decorated" inputs has never been easier than in Sanity Studio v3. `./a
 
 Powered by [@sanity/client](https://github.com/sanity-io/client)
 
-Requires a token with **editor** permissions in `.env`. Clicking the like/dislike buttons on a Record's page will trigger a Remix action which will send a mutation to the document. This is an example of how user actions on the site may trigger changes on your Sanity dataset.
+Requires a token with **editor** permissions in `.env`. Clicking the like/dislike buttons on a Record's page will trigger a React Router action which will send a mutation to the document. This is an example of how user actions on the site may trigger changes on your Sanity dataset.
 
 ### Typed and validated responses
 
@@ -107,29 +112,14 @@ The `record` type generates dynamic open graph images using the `~/routes/resour
 
 ## Sanity Studio
 
-Visit `https://localhost:3000/studio` in your Remix app. You will need to:
+Visit `https://localhost:5173/studio` in your React Router app. You will need to:
 
 1. Rename `.env.template` to `.env`
 2. Set the correct Project ID, Dataset Name and preferred API Version from a project in your [Sanity Manage](https://sanity.io/manage)
-3. Add `http://localhost:3000` to the CORS settings on that project, with Allow Credentials privileges
+3. Add `http://localhost:5173` to the CORS settings on that project, with Allow Credentials privileges
 
 ## Deployment
 
-This Remix template is specifically configured for hosting on Vercel.
+This React Router template is specifically configured for hosting on Vercel.
 
 1. Check this repository into your own source control (like GitHub) and deploy to Vercel.
-
-### Using a Template
-
-When you ran `npx create-remix@latest` there were a few choices for hosting. You can run that again to create a new project, then copy over your `app/` folder to the new project that's pre-configured for your target server.
-
-```sh
-cd ..
-# create a new project, and pick a pre-configured host
-npx create-remix@latest
-cd my-new-remix-app
-# remove the new project's app (not the old one!)
-rm -rf app
-# copy your app over
-cp -R ../my-old-remix-app/app app
-```

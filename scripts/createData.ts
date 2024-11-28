@@ -36,7 +36,7 @@ async function createData() {
     params: {types: ['home', 'record', 'artist', 'genre', 'sanity.imageAsset']},
   })
 
-  const home = {
+  const home: SanityDocumentLike = {
     _id: 'home',
     _type: 'home',
     title: 'Interactive live previews with Presentation',

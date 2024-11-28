@@ -19,7 +19,7 @@ const main = ({rootDirectory}) => {
 
   console.log(`\nWrote SANITY_SESSION_SECRET to ${envPath}`)
 
-  // Create CORS origin for http://localhost:3000
+  // Create CORS origin for http://localhost:5173
   execSync(
     'npx sanity@latest exec ./remix.init/createCorsOrigin.ts --with-user-token',
     {
@@ -28,7 +28,7 @@ const main = ({rootDirectory}) => {
     },
   )
 
-  console.log(`\nAdded http://localhost:3000 to CORS origins`)
+  console.log(`\nAdded http://localhost:5173 to CORS origins`)
 
   // Create viewer token for live preview
   execSync(
@@ -45,7 +45,7 @@ const main = ({rootDirectory}) => {
     `\nComplete your ".env" file to match ".env.template" with Sanity API tokens to setup live preview and mutations.`,
   )
   console.log(
-    `\nVisit /studio in your application to load Sanity Studio and begin creating content`,
+    `\nVisit ${STUDIO_BASEPATH} in your application to load Sanity Studio and begin creating content`,
   )
 }
 

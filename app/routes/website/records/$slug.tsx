@@ -1,29 +1,19 @@
-import type {
-  ActionFunction,
-  LoaderFunctionArgs,
-  MetaFunction,
-} from '@remix-run/node'
-import {json} from '@remix-run/node'
-import {useLoaderData} from '@remix-run/react'
 import {useQuery} from '@sanity/react-loader'
+import {useLoaderData} from 'react-router'
 
 import {Record} from '~/components/Record'
-import type {loader as layoutLoader} from '~/routes/_website'
-import {OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH} from '~/routes/resource.og'
+import {OG_IMAGE_HEIGHT, OG_IMAGE_WIDTH} from '~/routes/resource/og'
 import {client} from '~/sanity/client'
 import {loadQuery} from '~/sanity/loader.server'
 import {loadQueryOptions} from '~/sanity/loadQueryOptions.server'
 import {RECORD_QUERY} from '~/sanity/queries'
 import {type RecordDocument, recordZ} from '~/types/record'
 
-export const meta: MetaFunction<
-  typeof loader,
-  {
-    'routes/_website': typeof layoutLoader
-  }
-> = ({data, matches}) => {
+import type {Route} from './+types/$slug'
+
+export const meta = ({data, matches}: Route.MetaArgs) => {
   const layoutData = matches.find(
-    (match) => match.id === `routes/_website`,
+    (match) => match.id === `routes/website/layout`,
   )?.data
   const home = layoutData ? layoutData.initial.data : null
   const title = [data?.initial?.data?.title, home?.siteTitle]
@@ -43,7 +33,7 @@ export const meta: MetaFunction<
 }
 
 // Perform a `like` or `dislike` mutation on a `record` document
-export const action: ActionFunction = async ({request}) => {
+export const action = async ({request}: Route.ActionArgs) => {
   if (request.method !== 'POST') {
     throw new Response('Method not allowed', {status: 405})
   }
@@ -88,15 +78,15 @@ export const action: ActionFunction = async ({request}) => {
             dislikes: dislikes ?? 0,
           }))
       default:
-        return json({message: 'Invalid action'}, 400)
+        throw new Response('Bad action', {status: 400})
     }
   }
 
-  return json({message: 'Bad request'}, 400)
+  throw new Response('Bad request', {status: 400})
 }
 
 // Load the `record` document with this slug
-export const loader = async ({params, request}: LoaderFunctionArgs) => {
+export const loader = async ({params, request}: Route.LoaderArgs) => {
   const {options} = await loadQueryOptions(request.headers)
 
   const query = RECORD_QUERY
@@ -123,13 +113,9 @@ export const loader = async ({params, request}: LoaderFunctionArgs) => {
   }
 }
 
-export default function RecordPage() {
-  const {initial, query, params} = useLoaderData<typeof loader>()
-  const {data} = useQuery<typeof initial.data>(query, params, {
-    // There's a TS issue with how initial comes over the wire
-    // @ts-expect-error
-    initial,
-  })
+export default function RecordPage({loaderData}: Route.ComponentProps) {
+  const {initial, query, params} = loaderData
+  const {data} = useQuery(query, params, {initial})
 
   return data ? <Record data={data} /> : null
 }
