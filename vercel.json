@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    {
+      "source": "/server/(.*)",
+      "destination": "/server"
+    }
+  ],
+  "redirects": [{"source": "/", "destination": "/server", "permanent": false}]
+}
