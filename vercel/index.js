@@ -1,6 +1,7 @@
 import {handle} from 'hono/vercel'
-import app from './server'
+import honoServer from './server'
 
+const app = await honoServer()
 const handler = handle(app)
 
 export const GET = handler
