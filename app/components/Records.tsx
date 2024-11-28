@@ -1,8 +1,9 @@
-import { Link } from 'react-router';
+import {Link} from 'react-router'
 import type {EncodeDataAttributeCallback} from '@sanity/react-loader'
 
 import {RecordCover} from '~/components/RecordCover'
 import type {RecordStub} from '~/types/record'
+import {STUDIO_BASEPATH} from '~/sanity/constants'
 
 type RecordsProps = {
   records: RecordStub[]
@@ -56,8 +57,8 @@ export function Records(props: RecordsProps) {
     <div className="prose prose-xl mx-auto bg-green-50 p-4">
       <p>No records found, yet!</p>
       <p>
-        <a href="/studio">Log in to your Sanity Studio</a> and start creating
-        content!
+        <a href={STUDIO_BASEPATH}>Log in to your Sanity Studio</a> and start
+        creating content!
       </p>
       <p>Or, run </p>
       <pre>

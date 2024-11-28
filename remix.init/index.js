@@ -45,7 +45,7 @@ const main = ({rootDirectory}) => {
     `\nComplete your ".env" file to match ".env.template" with Sanity API tokens to setup live preview and mutations.`,
   )
   console.log(
-    `\nVisit /studio in your application to load Sanity Studio and begin creating content`,
+    `\nVisit ${STUDIO_BASEPATH} in your application to load Sanity Studio and begin creating content`,
   )
 }
 
