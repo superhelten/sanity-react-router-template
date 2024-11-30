@@ -1,13 +1,13 @@
-import {z} from 'zod'
+import { z } from 'zod'
 
-// This is a Zod schema
-// https://zod.dev/
+// This is a Zod schema for validation.
+// Learn more at https://zod.dev/
 
-// It will validate data at run time
-// And generate Types during development
-// Giving you both the flexibility of writing GROQ queries
-// And the safety of Typescript
-// without being limited to the shape of your Sanity Schema
+// The schema validates data at runtime
+// and generates TypeScript types during development,
+// providing both the flexibility of writing GROQ queries
+// and the type safety of TypeScript,
+// without being limited to the structure of your Sanity schema.
 export const recordZ = z.object({
   _id: z.string(),
   title: z.string().nullable(),
@@ -21,10 +21,10 @@ export const recordZ = z.object({
         _key: z.string(),
         title: z.string().nullable(),
         duration: z.number().nullable(),
-      }),
+      })
     )
     .nullable(),
-  // ...being a touch lazy here, these could be more strongly typed
+  // These fields could be more strongly typed.
   image: z.any().nullable(),
   content: z.array(z.any()).nullable(),
 })
