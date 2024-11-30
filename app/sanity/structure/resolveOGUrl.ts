@@ -1,5 +1,5 @@
 export function resolveOGUrl(documentId?: string) {
-  // Studio is a client-side only app so window should be available
+  // Studio is a client-side-only app so a window should be available
   if (!documentId || typeof document === 'undefined') {
     return ''
   }
